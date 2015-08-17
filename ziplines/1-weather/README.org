@@ -1,0 +1,7 @@
+
+
+* Create API keys
+** DONE Weather API: openweathermap
+   API key: 9afcbe95de809ed4bfa5fa5870266d4b
+** TODO Google maps
+   Use new account, not personal account

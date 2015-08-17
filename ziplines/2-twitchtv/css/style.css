@@ -1,0 +1,150 @@
+.tva-app {
+    background: gold;
+    width: 25em;
+    margin: 20px auto;
+}
+
+.tva-tab-bar {
+    overflow: hidden;
+    color: #866FD7;
+    background: #1F0772;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+}
+.tva-tab-bar .tva-tab {
+    float: left;
+    width: 33%;
+    text-align: center;
+    padding: 0px 0;
+    position: relative
+}
+
+.tva-tab-bar .tva-tab a {
+    display: block;
+    color: #866FD7;
+    width: 100%;
+    padding: 12px 0;
+}
+.tva-tab-bar .tva-tab a:hover {
+    text-decoration: none;
+    color: #6949D7;
+}
+.tva-tab-bar .tva-tab a:visited {
+    text-decoration: none;
+}
+.tva-tab-bar .tva-tab a.tva-active {
+    background: #402C84;
+}
+.tva-search-bar {
+    background: #6949D7;
+    padding: 10px 0;
+    text-align: center;
+}
+.tva-search-bar .tva-search-bar-inner {
+    display: inline-block;
+    width: 80%;
+    position: relative;
+}
+.tva-search-bar .fa-search {
+    position: absolute;
+    left: 10px; top: 6px;
+}
+.tva-search-bar .tva-search {
+    border: 0;
+    font-size: 17px;
+    border-radius: 15px;
+    width: 100%;
+    padding-left: 30px;
+}
+
+.tva-channel-list .tva-channel-item {
+    display: none;
+}
+.tva-channel-list .tva-channel-item.tva-match {
+    display: inherit;
+}
+
+.tva-channel-list.tva-online .tva-offline {
+    display: none;
+}
+.tva-channel-list.tva-offline .tva-online {
+    display: none;
+}
+
+.tva-channel-list {
+    background: #402C84;
+}
+.tva-channel-item {
+    padding: 7px 10px;
+    overflow: hidden;
+    color: white;
+    border-top: 1px solid #866FD7;
+}
+
+.tva-page-link:hover,
+.tva-page-link:visited {
+    text-decoration:none;
+    color: white;
+}
+.tva-page-link {
+    color: white;
+}
+
+.tva-channel-item.tva-online {
+    background: #866FD7;    
+}
+.tva-channel-item.tva-offline {
+    background: #1F0772;
+    opacity: 0.4;
+}
+.tva-channel-item.tva-offline .fa-check {
+    display: none;
+}
+.tva-channel-item.tva-online .fa-times {
+    display: none;
+}
+.tva-channel-item .tva-status .tva-text {
+    display:none;
+}
+.tva-channel-item .tva-icon,
+.tva-channel-item .tva-details,
+.tva-channel-item .tva-name,
+.tva-channel-item .tva-status {
+    float: left;
+}
+
+.tva-channel-item .tva-icon {
+    width: 15%;
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 0px;
+}
+.tva-channel-item .tva-icon img {
+    width: 100%;
+}
+
+.tva-channel-item .tva-details {
+    width: 75%;
+    height: 100%;
+    padding: 0px 15px;
+    position: relative;
+    top: 50%;
+    transform: translaeY(-50%)
+}
+.tva-channel-item .tva-name {
+    width: 90%;
+    font-size: 17px;
+}
+.tva-channel-item .tva-stream-text {
+    font-size: 13px;
+    color: #ddd;
+}
+.tva-status {
+    margin-top: 13px;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 2em;
+    text-align: right;
+}

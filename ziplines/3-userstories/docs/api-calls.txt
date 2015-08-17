@@ -1,0 +1,4 @@
+-*- mode: restclient -*- 
+
+# User stories
+GET http://www.freecodecamp.com/stories/hotStories

@@ -1,0 +1,11 @@
+# -*- mode: restclient -*-
+
+# Test restclient-mode https
+GET https://api.twitch.tv/kraken?callback=foo
+
+#
+GET https://api.twitch.tv/kraken/streams/test_channel
+Accept: application/vnd.twitchtv.v3+json
+
+#
+GET https://api.twitch.tv/kraken/users/test_user1

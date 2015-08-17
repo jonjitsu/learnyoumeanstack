@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+   echo "$(basename $0) <projectname>"
+   exit 1
+fi
+
+mkdir -p "$1"/{js,css}
+cp index.html.tmpl "$1"/index.html
+
+echo "alert('JS works');" > "$1"/js/main.js
+echo "body { background: red; }" > "$1"/css/style.css
+

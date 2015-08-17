@@ -1,0 +1,69 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link href="css/style.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="tva-app">
+            <div class="tva-tab-bar">
+                <div class="tva-tab tva-tab-all">
+                    <a data-tva-type="" class="tva-active" href="#">All</a>
+                </div>
+                <div class="tva-tab tva-tab-online">
+                    <a data-tva-type="online" href="#">Online</a>
+                </div>
+                <div class="tva-tab tva-tab-offline">
+                    <a data-tva-type="offline" href="#">Offline</a>
+                </div>
+            </div>
+            <div class="tva-search-bar">
+                <div class="tva-search-bar-inner">
+ <i class="fa fa-search"></i>
+                <input class="tva-search" name="search" type="text" value=""/>
+                </div>
+            </div>
+            <div class="tva-channel-list">
+                
+            </div>
+        </div>
+      <footer>
+        <p>&copy; Company 2015</p>
+      </footer>
+      <script type="x-template" id="tva-tmpl-channel-item">
+          <div data-tva-search="<%= name %>" class="tva-channel-item tva-match <%= statusClass %>">
+              <a class="tva-page-link" href="<%= pageUrl %>" target="_blank">
+       <div class="tva-icon">
+       <img src="<%= icon_url %>">
+       </div>
+       <div class="tva-details">
+           <div class="tva-name"><%= name %></div>
+           <div class="tva-stream-text"><%= streamText %></div>
+       </div>
+       <div class="tva-status">
+           <i class="fa fa-check"></i>
+           <i class="fa fa-times"></i>
+           <span class="tva-text"><%= status %></span>
+       </div>
+              </a>
+       </div>
+      </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+# -*- mode: restclient -*-
+
+######################
+# Openweathermap Calls
+######################
+
+# get data by city
+GET http://api.openweathermap.org/data/2.5/weather?q=London
+
+# get data by coordinates
+GET http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139
+#
+GET http://api.openweathermap.org/data/2.5/weather?lat=45.4730798&lon=-73.595421899
+######################
+# darksky
+######################
+GET https://api.forecast.io/forecast/APIKEY/35,139
+
+
+######################
+# wunderground
+######################
+GET http://api.wunderground.com/api/Your_Key/conditions/q/CA/San_Francisco.json
+
+#
+GET http://autocomplete.wunderground.com/aq?query=london
+
+######################
+# ip geolocation
+######################
+
+# ipinfo
+GET http://ipinfo.io/?callback=jQuery21308336533633992076_1438167782172&_=1438167782173
+
+# 
+GET http://ipinfo.io/
+
+# freegeoip
+GET http://freegeoip.net/json/?callback=abc
+
+# ip-api
+GET http://ip-api.com/json/?callback=abc
+
+
+###################
+# Geo tagged photos
+###################
+
+# flickr
+
+# through yahoo query
+GET https://query.yahooapis.com/v1/public/yql?q=select * from flickr.photos.search where has_geo='true' and tags='New York City' and api_key='8585fe51ef2851eac207fde547e87cd8'&format=json&callback=yqlCallback
+
+# through flickr api
+# get photos for coords
+GET https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=6de5c86df96cc838226d2c91d9e4701d&lat=45&lon=-73&format=json&auth_token=72157654531294984-7296a35241802cf5&api_sig=764f458ded57f4a7e8d7659ea71d220e
+#get photos for coords
+GET https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=6de5c86df96cc838226d2c91d9e4701d&lat=45&lon=-73&format=json&jsoncallback=abc
+
+#get photo info
+GET https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=8585fe51ef2851eac207fde547e87cd8&format=json&jsoncallback=abc&photo_id=20365204821&secret=96a1182d57
+#get photo info no secret
+GET https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=8585fe51ef2851eac207fde547e87cd8&format=json&jsoncallback=abc&photo_id=20365204821
+
+# get photo sizes
+GET https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=8585fe51ef2851eac207fde547e87cd8&format=json&jsoncallback=abc&photo_id=20365204821
