@@ -1,0 +1,5 @@
+<div class="ttt-gameboard">
+    <div class="ttt-row" ng-repeat="(row, cells) in c.gameState.state">
+        <div ng-click="c.mark(row,col)" class="ttt-cell" ng-class="{ 'ttt-winner' : cell.isWinner }" ng-repeat="(col,cell) in cells track by $index"><div class="ttt-strikethrough" />{{ cell.value===null ? '&nbsp;' : cell.value  }}</div>
+    </div>
+</div>
