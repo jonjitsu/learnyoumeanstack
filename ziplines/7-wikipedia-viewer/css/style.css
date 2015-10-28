@@ -1,0 +1,62 @@
+body {
+    background: #eee;
+    text-align: center;
+}
+.wv-search-box {
+    display: inline-block;
+    width: 80%;
+}
+.wv-search {
+    padding: 5px 5px;
+    height: 30px;
+    margin: 20px auto;
+    width: 95%;
+}
+.wv-search-box button {
+    height: 30px;
+    width: 5%;
+}
+
+footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    font-size: 9px;
+}
+
+.wv-results {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: -20px;
+    border: 1px solid #bbb;
+}
+.wv-results-item {
+    background: white;
+    padding: 3px 5px;
+    border-bottom: 1px solid #ddd;
+}
+.wv-results-item.active,
+.wv-results-item:hover {
+    background: #eee;
+}
+.wv-results-item:hover {
+    cursor: pointer;
+}
+.wv-title {
+    font-size: 20px;
+}
+.wv-thumbnail {
+    max-width: 60px;
+    height: auto;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 5px;
+}
+.wv-full-results {
+    padding: 5px;
+}
+.wv-full-result-item {
+    background: white;
+    padding: 5px 10px;
+    margin: 20px 0;
+}

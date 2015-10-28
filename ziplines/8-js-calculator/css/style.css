@@ -1,0 +1,63 @@
+body {
+    background: white;
+    padding: 50px;
+}
+
+
+.jsc-calculator {
+    width: 50%;
+    background: #bbb;
+    padding: 3%;
+    border-radius: 5px;
+    box-shadow: 0 0 1px #000;
+}
+.jsc-heading {
+    text-align: center;
+    margin-bottom: 10px; 
+}
+
+.jsc-display {
+    font-family: ds-digitalnormal, arial;
+    font-size: 30px;
+    text-align: right;
+    width: 96%;
+    background: #eee;
+    padding: 2%;
+    margin: 0;
+    border-radius: 5px;
+}
+
+.jsc-buttons {
+    margin-top: 10px;
+}
+
+.jsc-row {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 0%;
+}
+.jsc-btn {
+    font-weight: bold;
+    display: inline-block;
+    width: 23%;
+    height: 27px;
+    margin-left: 1%;
+    vertical-align: top;
+
+    border: 0;
+    border-radius: 7px;
+    box-shadow: 0 0 1px #000;
+}
+
+.jsc-btn.jsc-special {
+    background-color: red;
+    color: white;
+}
+
+.jsc-btn.jsc-tall {
+    height: 60px;
+}
+
+.jsc-last-row {
+    margin-top: -34px;
+}

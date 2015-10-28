@@ -1,0 +1,730 @@
+#+PROPERTY: header-args :var ENDPOINT="https://en.wikipedia.org/w/api.php?format=json" 
+Wikimedia API Calls
+
+* Overview
+** Endpoint patterns
+https://en.wikipedia.org/w/api.php      # English Wikipedia API
+https://nl.wikipedia.org/w/api.php      # Dutch Wikipedia API
+https://commons.wikimedia.org/w/api.php # Wikimedia Commons API
+
+*** Is there a way to get a list programmatically?
+
+** params
+*** format: json, jsonfm
+*** action: type of operation to perform
+
+** User-Agent is required [[https://meta.wikimedia.org/wiki/User-Agent_policy][user agent policy]]
+
+* Actions
+  :PROPERTIES:
+  :var: endpoint="https://en.wikipedia.org/w/api.php?format=json"
+  :END:
+
+** test this file
+#+BEGIN_SRC http
+GET https://meta.wikimedia.org/wiki/User-Agent_policy
+#+END_SRC
+ 
+#+BEGIN_SRC http :pretty
+GET ${endpoint}&action=query&titles=benjamin%frank
+#+END_SRC
+
+
+** query
+curl 'https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search
+&gsrnamespace=0
+&gsrlimit=10
+&prop=pageimages|extracts
+&pilimit=max
+&exintro
+&explaintext
+&exsentences=1
+&exlimit=max
+&gsrsearch=benjamin%20frank
+&callback=angular.callbacks._0' -H 'accept-encoding: gzip, deflate, sdch' -H 'accept-language: en-US,en;q=0.8' -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/43.0.2357.130 Chrome/43.0.2357.130 Safari/537.36' -H 'accept: */*' -H 'referer: http://s.codepen.io/GeoffStorbeck/fullpage/MwgQea?' -H 'cookie: strategy2015_only5times_A=5; strategy2015_only5times_A-wait=4%7C1427600547464%7C0; centralnotice_bannercount_storeMay2015=2; GeoIP=CA:ON:Toronto:43.6656:-79.3830:v4; enwikimwuser-sessionId=78c94fec5c7d783d; WMF-Last-Access=03-Oct-2015' --compressed
+#+BEGIN_SRC http :pretty
+GET 
+#+END_SRC
+* Examples from playing around on wikipedia
+** (autocomplete) Typing in search box: design patterns
+curl 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=design&namespace=0&limit=10&suggest=' -H 'accept-encoding: gzip, deflate, sdch' -H 'x-requested-with: XMLHttpRequest' -H 'accept-language: en-US,en;q=0.8' -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/43.0.2357.130 Chrome/43.0.2357.130 Safari/537.36' -H 'accept: application/json, text/javascript, */*; q=0.01' -H 'referer: https://en.wikipedia.org/wiki/Main_Page' -H 'cookie: strategy2015_only5times_A=5; strategy2015_only5times_A-wait=4%7C1427600547464%7C0; centralnotice_bannercount_storeMay2015=2; GeoIP=CA:ON:Toronto:43.6656:-79.3830:v4; enwikimwuser-sessionId=78c94fec5c7d783d; WMF-Last-Access=03-Oct-2015' --compressed
+curl 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=design+p&namespace=0&limit=10&suggest=' -H 'accept-encoding: gzip, deflate, sdch' -H 'x-requested-with: XMLHttpRequest' -H 'accept-language: en-US,en;q=0.8' -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/43.0.2357.130 Chrome/43.0.2357.130 Safari/537.36' -H 'accept: application/json, text/javascript, */*; q=0.01' -H 'referer: https://en.wikipedia.org/wiki/Main_Page' -H 'cookie: strategy2015_only5times_A=5; strategy2015_only5times_A-wait=4%7C1427600547464%7C0; centralnotice_bannercount_storeMay2015=2; GeoIP=CA:ON:Toronto:43.6656:-79.3830:v4; enwikimwuser-sessionId=78c94fec5c7d783d; WMF-Last-Access=03-Oct-2015' --compressed
+curl 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=design+patterns&namespace=0&limit=10&suggest=' -H 'accept-encoding: gzip, deflate, sdch' -H 'x-requested-with: XMLHttpRequest' -H 'accept-language: en-US,en;q=0.8' -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/43.0.2357.130 Chrome/43.0.2357.130 Safari/537.36' -H 'accept: application/json, text/javascript, */*; q=0.01' -H 'referer: https://en.wikipedia.org/wiki/Main_Page' -H 'cookie: strategy2015_only5times_A=5; strategy2015_only5times_A-wait=4%7C1427600547464%7C0; centralnotice_bannercount_storeMay2015=2; GeoIP=CA:ON:Toronto:43.6656:-79.3830:v4; enwikimwuser-sessionId=78c94fec5c7d783d; WMF-Last-Access=03-Oct-2015' --compressed
+
+Notice the + for space instead of percent encoding.
+Relavent docs:
+- https://www.mediawiki.org/wiki/API:Opensearch/pl
+
+#+BEGIN_SRC http :pretty
+GET https://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=design+p&namespace=0&limit=10&suggest=
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+[
+  "design p",
+  [
+    "Design patent",
+    "Design pattern",
+    "Design paradigm",
+    "Design Patterns",
+    "Design pattern (computing)",
+    "Design process",
+    "Design psychology",
+    "Design predicates",
+    "Design principles and elements",
+    "Design Pattern - Adapter"
+  ],
+  [
+    "In the United States, a design patent is a form of legal protection granted to the ornamental design of a functional item.",
+    "A design pattern is the re-usable form of a solution to a design problem. The idea was introduced by the architect Christopher Alexander and has been adapted for various other disciplines, most notably computer science.",
+    "The concept of design paradigms derives from the rather ambiguous idea of paradigm originating in the sociology of science, which carries at least two main meanings:",
+    "Design Patterns: Elements of Reusable Object-Oriented Software is a software engineering book describing recurring solutions to common problems in software design.",
+    "",
+    "",
+    "",
+    "Design predicates are a method invented by Thomas McCabe, to quantify the complexity of the integration of two units of software.",
+    "",
+    ""
+  ],
+  [
+    "https:\/\/en.wikipedia.org\/wiki\/Design_patent",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_pattern",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_paradigm",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_Patterns",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_pattern_(computing)",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_process",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_psychology",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_predicates",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_principles_and_elements",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_Pattern_-_Adapter"
+  ]
+]
+#+end_example
+
+** typing benja and clicking search
+curl 'https://en.wikipedia.org/w/index.php?search=benja&title=Special%3ASearch&go=Go' -H 'accept-encoding: gzip, deflate, sdch' -H 'accept-language: en-US,en;q=0.8' -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/43.0.2357.130 Chrome/43.0.2357.130 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'referer: https://en.wikipedia.org/wiki/Software_design_pattern' -H 'cookie: strategy2015_only5times_A=5; strategy2015_only5times_A-wait=4%7C1427600547464%7C0; centralnotice_bannercount_storeMay2015=2; GeoIP=CA:ON:Toronto:43.6656:-79.3830:v4; enwikimwuser-sessionId=78c94fec5c7d783d; WMF-Last-Access=03-Oct-2015' --compressed
+
+#+BEGIN_SRC http :pretty
+GET https://en.wikipedia.org/w/index.php?search=benja&title=Special%3ASearch
+#+END_SRC
+
+** search
+curl 'https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=design%20pat&callback=angular.callbacks._4' -H 'accept-encoding: gzip, deflate, sdch' -H 'accept-language: en-US,en;q=0.8' -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/43.0.2357.130 Chrome/43.0.2357.130 Safari/537.36' -H 'accept: */*' -H 'referer: http://s.codepen.io/GeoffStorbeck/fullpage/MwgQea?' -H 'cookie: strategy2015_only5times_A=5; strategy2015_only5times_A-wait=4%7C1427600547464%7C0; centralnotice_bannercount_storeMay2015=2; GeoIP=CA:ON:Toronto:43.6656:-79.3830:v4; enwikimwuser-sessionId=78c94fec5c7d783d; WMF-Last-Access=03-Oct-2015' --compressed
+
+
+
+** search
+
+#+BEGIN_SRC http :pretty
+GET https://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=design+p&namespace=0&limit=10
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+[
+  "design p",
+  [
+    "Design patent",
+    "Design pattern",
+    "Design paradigm",
+    "Design Patterns",
+    "Design pattern (computing)",
+    "Design process",
+    "Design psychology",
+    "Design predicates",
+    "Design principles and elements",
+    "Design Pattern - Composite"
+  ],
+  [
+    "In the United States, a design patent is a form of legal protection granted to the ornamental design of a functional item.",
+    "A design pattern is the re-usable form of a solution to a design problem. The idea was introduced by the architect Christopher Alexander and has been adapted for various other disciplines, most notably computer science.",
+    "The concept of design paradigms derives from the rather ambiguous idea of paradigm originating in the sociology of science, which carries at least two main meanings:",
+    "Design Patterns: Elements of Reusable Object-Oriented Software is a software engineering book describing recurring solutions to common problems in software design.",
+    "",
+    "",
+    "",
+    "Design predicates are a method invented by Thomas McCabe, to quantify the complexity of the integration of two units of software.",
+    "",
+    ""
+  ],
+  [
+    "https:\/\/en.wikipedia.org\/wiki\/Design_patent",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_pattern",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_paradigm",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_Patterns",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_pattern_(computing)",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_process",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_psychology",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_predicates",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_principles_and_elements",
+    "https:\/\/en.wikipedia.org\/wiki\/Design_Pattern_-_Composite"
+  ]
+]
+#+end_example
+
+** search (action=query)
+https://www.mediawiki.org/w/api.php?action=help&modules=query%2Bsearch
+
+#+BEGIN_SRC http :pretty
+GET https://en.wikipedia.org/w/api.php?format=json&action=query&list=search&srsearch=design+pat&srnamespace=0&srlimit=10
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+{
+  "query": {
+    "search": [
+      {
+        "timestamp": "2015-08-25T15:17:52Z",
+        "wordcount": 32,
+        "size": 995,
+        "snippet": "cabinet.  Manufacturer Stern Pinball \/ <span class=\"searchmatch\">Pat<\/span> Lawlor <span class=\"searchmatch\">Design<\/span> Release date September 2001 System Stern WhiteStar <span class=\"searchmatch\">Design<\/span> <span class=\"searchmatch\">Pat<\/span> Lawlor Programming Louis Koziarz, Greg",
+        "title": "Monopoly (pinball)",
+        "ns": 0
+      },
+      {
+        "timestamp": "2014-06-21T18:19:10Z",
+        "wordcount": 76,
+        "size": 629,
+        "snippet": "University of Louisiana at Monroe <span class=\"searchmatch\">Pat<\/span> Collins (lighting designer), Tony Award winner for Best Lighting <span class=\"searchmatch\">Design<\/span> <span class=\"searchmatch\">Pat<\/span> Collins (showman) (born 1859), British",
+        "title": "Pat Collins (disambiguation)",
+        "ns": 0
+      },
+      {
+        "timestamp": "2015-07-06T09:44:53Z",
+        "wordcount": 62,
+        "size": 1094,
+        "snippet": "produced by Williams. It was the first machine <span class=\"searchmatch\">designed<\/span> by <span class=\"searchmatch\">Pat<\/span> Lawlor, and is known for its multi-playfield <span class=\"searchmatch\">design<\/span>, in which the player can play a game on the",
+        "title": "Banzai Run",
+        "ns": 0
+      },
+      {
+        "timestamp": "2015-09-10T08:25:42Z",
+        "wordcount": 193,
+        "size": 2380,
+        "snippet": "a Williams pinball machine released in December 1997. It was <span class=\"searchmatch\">Pat<\/span> Lawlor's final <span class=\"searchmatch\">design<\/span> for Williams before their eventual closing in 1999.   The game",
+        "title": "No Good Gofers",
+        "ns": 0
+      },
+      {
+        "timestamp": "2015-09-05T13:10:37Z",
+        "wordcount": 333,
+        "size": 2703,
+        "snippet": "Safe Cracker is a pinball machine with a safecracking theme, <span class=\"searchmatch\">designed<\/span> by <span class=\"searchmatch\">Pat<\/span> Lawlor, and distributed by Midway (under the Bally label). It was created",
+        "title": "Safe Cracker (pinball)",
+        "ns": 0
+      },
+      {
+        "timestamp": "2015-09-10T08:15:59Z",
+        "wordcount": 251,
+        "size": 2816,
+        "snippet": "Williams System 11b games. The game features a whirlwind theme and was <span class=\"searchmatch\">designed<\/span> by <span class=\"searchmatch\">Pat<\/span> Lawlor.   Whirlwind is distinguished by three playfield rotating discs",
+        "title": "Whirlwind (pinball)",
+        "ns": 0
+      },
+      {
+        "timestamp": "2015-09-11T04:49:18Z",
+        "wordcount": 228,
+        "size": 2390,
+        "snippet": "Earthshaker!  Manufacturer Williams Release date February, 1989 <span class=\"searchmatch\">Design<\/span> <span class=\"searchmatch\">Pat<\/span> Lawlor Programming Mark Penacho Artwork Tim Elliott Music Jon Hey, Chris Granner",
+        "title": "Earthshaker! (pinball)",
+        "ns": 0
+      },
+      {
+        "timestamp": "2015-09-05T13:09:14Z",
+        "wordcount": 176,
+        "size": 2244,
+        "snippet": "Ripley's Believe It or Not!  Manufacturer Stern Release date 2004 <span class=\"searchmatch\">Design<\/span> <span class=\"searchmatch\">Pat<\/span> Lawlor, Louis Koziarz Programming Louis Koziarz, Greg Dunlap Artwork John",
+        "title": "Ripley's Believe It or Not! (pinball)",
+        "ns": 0
+      },
+      {
+        "timestamp": "2015-07-06T09:49:38Z",
+        "wordcount": 105,
+        "size": 1747,
+        "snippet": "Productions Release date November 2008 System Stern S.A.M. Board System <span class=\"searchmatch\">Design<\/span> <span class=\"searchmatch\">Pat<\/span> Lawlor Programming Lonnie D. Ropp, Lyman F. Sheats Jr., Keith P. Johnson",
+        "title": "CSI: Crime Scene Investigation (pinball)",
+        "ns": 0
+      },
+      {
+        "timestamp": "2015-09-10T08:00:32Z",
+        "wordcount": 303,
+        "size": 3327,
+        "snippet": "Road Show (also known as Road Show) is a 1994 widebody pinball game <span class=\"searchmatch\">designed<\/span> by <span class=\"searchmatch\">Pat<\/span> Lawlor and released by Williams. It is part of WMS' SuperPin line of",
+        "title": "Red & Ted's Road Show",
+        "ns": 0
+      }
+    ],
+    "searchinfo": {
+      "totalhits": 8241
+    }
+  },
+  "continue": {
+    "continue": "-||",
+    "sroffset": 10
+  },
+  "batchcomplete": "",
+  "warnings": {
+    "query": {
+      "*": "Formatting of continuation data has changed. To receive raw query-continue data, use the 'rawcontinue' parameter. To silence this warning, pass an empty string for 'continue' in the initial query."
+    }
+  }
+}
+#+end_example
+
+
+** gsrsearch
+
+#+BEGIN_SRC http :pretty
+GET https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=dfa
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+{
+  "limits": {
+    "extracts": 20,
+    "pageimages": 50
+  },
+  "query": {
+    "pages": {
+      "19975805": {
+        "extract": "The DFA Remixes is a series of two remix compilations by influential dance-punk production duo The DFA (James Murphy and Tim Goldsworthy).",
+        "pageimage": "Dfa_remixes_chapter_1_cover.jpg",
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/thumb\/b\/b9\/Dfa_remixes_chapter_1_cover.jpg\/50px-Dfa_remixes_chapter_1_cover.jpg"
+        },
+        "index": 3,
+        "title": "The DFA Remixes",
+        "ns": 0,
+        "pageid": 19975805
+      },
+      "1163167": {
+        "extract": "In the theory of computation and automata theory, the powerset construction or subset construction is a standard method for converting a nondeterministic finite automaton (NFA) into a deterministic finite automaton (DFA) which recognizes the same formal language.",
+        "pageimage": "NFA-powerset-construction-example.svg",
+        "thumbnail": {
+          "height": 48,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/3\/3f\/NFA-powerset-construction-example.svg\/50px-NFA-powerset-construction-example.svg.png"
+        },
+        "index": 10,
+        "title": "Powerset construction",
+        "ns": 0,
+        "pageid": 1163167
+      },
+      "26155973": {
+        "extract": "Greenberg: Original Motion Picture Soundtrack is the soundtrack to Noah Baumbach's film Greenberg.",
+        "pageimage": "Greenberg_soundtrack.jpg",
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/thumb\/e\/ea\/Greenberg_soundtrack.jpg\/50px-Greenberg_soundtrack.jpg"
+        },
+        "index": 7,
+        "title": "Greenberg (soundtrack)",
+        "ns": 0,
+        "pageid": 26155973
+      },
+      "13218231": {
+        "extract": "The Fama-DFA Prize is an annual prize given to authors with the best capital markets and asset pricing research papers published in the Journal of Financial Economics.",
+        "index": 4,
+        "title": "Fama-DFA Prize",
+        "ns": 0,
+        "pageid": 13218231
+      },
+      "653404": {
+        "extract": "In theory of computation, a branch of theoretical computer science, a deterministic finite automaton (DFA)\u2014also known as deterministic finite state machine\u2014is a finite state machine that accepts\/rejects finite strings of symbols and only produces a unique computation (or run) of the automation for each input string.",
+        "pageimage": "DFAexample.svg",
+        "thumbnail": {
+          "height": 30,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/9\/9d\/DFAexample.svg\/50px-DFAexample.svg.png"
+        },
+        "index": 9,
+        "title": "Deterministic finite automaton",
+        "ns": 0,
+        "pageid": 653404
+      },
+      "536694": {
+        "extract": "Democracy for America (DFA) is a progressive political action committee, headquartered in South Burlington, Vermont.",
+        "pageimage": "DFA_Logo.png",
+        "thumbnail": {
+          "height": 40,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/thumb\/c\/c7\/DFA_Logo.png\/50px-DFA_Logo.png"
+        },
+        "index": 6,
+        "title": "Democracy for America",
+        "ns": 0,
+        "pageid": 536694
+      },
+      "17447039": {
+        "extract": "In automata theory (a branch of computer science), DFA minimization is the task of transforming a given deterministic finite automaton (DFA) into an equivalent DFA that has a minimum number of states.",
+        "pageimage": "DFA_to_be_minimized.jpg",
+        "thumbnail": {
+          "height": 21,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/c\/cd\/DFA_to_be_minimized.jpg\/50px-DFA_to_be_minimized.jpg"
+        },
+        "index": 8,
+        "title": "DFA minimization",
+        "ns": 0,
+        "pageid": 17447039
+      },
+      "1841908": {
+        "extract": "DFA Records is an independent record label and production team, launched in September 2001 by Mo' Wax co-founder Tim Goldsworthy, musician James Murphy, and manager Jonathan Galkin.",
+        "index": 2,
+        "title": "DFA Records",
+        "ns": 0,
+        "pageid": 1841908
+      },
+      "6326292": {
+        "extract": "DFA (short for Duty Free Area) is an Italian progressive rock band from Verona, Italy.",
+        "index": 5,
+        "title": "DFA (Italian rock band)",
+        "ns": 0,
+        "pageid": 6326292
+      },
+      "373383": {
+        "extract": "DFA may refer to:",
+        "index": 1,
+        "title": "DFA",
+        "ns": 0,
+        "pageid": 373383
+      }
+    }
+  },
+  "continue": {
+    "continue": "gsroffset||",
+    "gsroffset": 10
+  },
+  "batchcomplete": "",
+  "warnings": {
+    "query": {
+      "*": "Formatting of continuation data has changed. To receive raw query-continue data, use the 'rawcontinue' parameter. To silence this warning, pass an empty string for 'continue' in the initial query."
+    }
+  }
+}
+#+end_example
+
+** gsrsearch min 
+#+BEGIN_SRC http :pretty
+GET https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts|info&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=dfa
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+{
+  "limits": {
+    "extracts": 20,
+    "pageimages": 50
+  },
+  "query": {
+    "pages": {
+      "19975805": {
+        "length": 3294,
+        "lastrevid": 598546934,
+        "touched": "2015-09-16T12:14:33Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "The DFA Remixes is a series of two remix compilations by influential dance-punk production duo The DFA (James Murphy and Tim Goldsworthy).",
+        "pageimage": "Dfa_remixes_chapter_1_cover.jpg",
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/thumb\/b\/b9\/Dfa_remixes_chapter_1_cover.jpg\/50px-Dfa_remixes_chapter_1_cover.jpg"
+        },
+        "index": 3,
+        "title": "The DFA Remixes",
+        "ns": 0,
+        "pageid": 19975805
+      },
+      "1163167": {
+        "length": 10934,
+        "lastrevid": 671951279,
+        "touched": "2015-09-26T19:44:34Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "In the theory of computation and automata theory, the powerset construction or subset construction is a standard method for converting a nondeterministic finite automaton (NFA) into a deterministic finite automaton (DFA) which recognizes the same formal language.",
+        "pageimage": "NFA-powerset-construction-example.svg",
+        "thumbnail": {
+          "height": 48,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/3\/3f\/NFA-powerset-construction-example.svg\/50px-NFA-powerset-construction-example.svg.png"
+        },
+        "index": 10,
+        "title": "Powerset construction",
+        "ns": 0,
+        "pageid": 1163167
+      },
+      "26155973": {
+        "length": 2284,
+        "lastrevid": 373506081,
+        "touched": "2015-09-26T19:44:34Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "Greenberg: Original Motion Picture Soundtrack is the soundtrack to Noah Baumbach's film Greenberg.",
+        "pageimage": "Greenberg_soundtrack.jpg",
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/thumb\/e\/ea\/Greenberg_soundtrack.jpg\/50px-Greenberg_soundtrack.jpg"
+        },
+        "index": 7,
+        "title": "Greenberg (soundtrack)",
+        "ns": 0,
+        "pageid": 26155973
+      },
+      "13218231": {
+        "length": 5443,
+        "lastrevid": 329440521,
+        "touched": "2015-09-26T19:44:34Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "The Fama-DFA Prize is an annual prize given to authors with the best capital markets and asset pricing research papers published in the Journal of Financial Economics.",
+        "index": 4,
+        "title": "Fama-DFA Prize",
+        "ns": 0,
+        "pageid": 13218231
+      },
+      "653404": {
+        "length": 15897,
+        "lastrevid": 682272530,
+        "touched": "2015-09-26T19:44:34Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "In theory of computation, a branch of theoretical computer science, a deterministic finite automaton (DFA)\u2014also known as deterministic finite state machine\u2014is a finite state machine that accepts\/rejects finite strings of symbols and only produces a unique computation (or run) of the automation for each input string.",
+        "pageimage": "DFAexample.svg",
+        "thumbnail": {
+          "height": 30,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/9\/9d\/DFAexample.svg\/50px-DFAexample.svg.png"
+        },
+        "index": 9,
+        "title": "Deterministic finite automaton",
+        "ns": 0,
+        "pageid": 653404
+      },
+      "536694": {
+        "length": 19237,
+        "lastrevid": 676031435,
+        "touched": "2015-09-26T19:44:34Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "Democracy for America (DFA) is a progressive political action committee, headquartered in South Burlington, Vermont.",
+        "pageimage": "DFA_Logo.png",
+        "thumbnail": {
+          "height": 40,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/thumb\/c\/c7\/DFA_Logo.png\/50px-DFA_Logo.png"
+        },
+        "index": 6,
+        "title": "Democracy for America",
+        "ns": 0,
+        "pageid": 536694
+      },
+      "17447039": {
+        "length": 17141,
+        "lastrevid": 681917631,
+        "touched": "2015-09-26T19:44:34Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "In automata theory (a branch of computer science), DFA minimization is the task of transforming a given deterministic finite automaton (DFA) into an equivalent DFA that has a minimum number of states.",
+        "pageimage": "DFA_to_be_minimized.jpg",
+        "thumbnail": {
+          "height": 21,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/c\/cd\/DFA_to_be_minimized.jpg\/50px-DFA_to_be_minimized.jpg"
+        },
+        "index": 8,
+        "title": "DFA minimization",
+        "ns": 0,
+        "pageid": 17447039
+      },
+      "1841908": {
+        "length": 18420,
+        "lastrevid": 683227388,
+        "touched": "2015-09-29T20:20:21Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "DFA Records is an independent record label and production team, launched in September 2001 by Mo' Wax co-founder Tim Goldsworthy, musician James Murphy, and manager Jonathan Galkin.",
+        "index": 2,
+        "title": "DFA Records",
+        "ns": 0,
+        "pageid": 1841908
+      },
+      "6326292": {
+        "length": 1542,
+        "lastrevid": 664054786,
+        "touched": "2015-09-29T20:20:21Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "DFA (short for Duty Free Area) is an Italian progressive rock band from Verona, Italy.",
+        "index": 5,
+        "title": "DFA (Italian rock band)",
+        "ns": 0,
+        "pageid": 6326292
+      },
+      "373383": {
+        "length": 2764,
+        "lastrevid": 603703101,
+        "touched": "2015-10-05T21:00:19Z",
+        "pagelanguage": "en",
+        "contentmodel": "wikitext",
+        "extract": "DFA may refer to:",
+        "index": 1,
+        "title": "DFA",
+        "ns": 0,
+        "pageid": 373383
+      }
+    }
+  },
+  "continue": {
+    "continue": "gsroffset||",
+    "gsroffset": 10
+  },
+  "batchcomplete": "",
+  "warnings": {
+    "query": {
+      "*": "Formatting of continuation data has changed. To receive raw query-continue data, use the 'rawcontinue' parameter. To silence this warning, pass an empty string for 'continue' in the initial query."
+    }
+  }
+}
+#+end_example
+
+
+** failed gsrsearch
+
+#+BEGIN_SRC http :pretty
+GET https://en.wikipedia.org/w/api.php?action=query&exlimit=max&explaintext&exsentences=1&extintro&format=json&generator=search&gsrlimit=10&gsrnamespace=0&gsrsearch=dfa&pilimit=max&prop=pageimages|extracts
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+{
+  "limits": {
+    "extracts": 20,
+    "pageimages": 50
+  },
+  "query": {
+    "pages": {
+      "19975805": {
+        "pageimage": "Dfa_remixes_chapter_1_cover.jpg",
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/thumb\/b\/b9\/Dfa_remixes_chapter_1_cover.jpg\/50px-Dfa_remixes_chapter_1_cover.jpg"
+        },
+        "index": 3,
+        "title": "The DFA Remixes",
+        "ns": 0,
+        "pageid": 19975805
+      },
+      "1163167": {
+        "pageimage": "NFA-powerset-construction-example.svg",
+        "thumbnail": {
+          "height": 48,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/3\/3f\/NFA-powerset-construction-example.svg\/50px-NFA-powerset-construction-example.svg.png"
+        },
+        "index": 10,
+        "title": "Powerset construction",
+        "ns": 0,
+        "pageid": 1163167
+      },
+      "26155973": {
+        "pageimage": "Greenberg_soundtrack.jpg",
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/thumb\/e\/ea\/Greenberg_soundtrack.jpg\/50px-Greenberg_soundtrack.jpg"
+        },
+        "index": 7,
+        "title": "Greenberg (soundtrack)",
+        "ns": 0,
+        "pageid": 26155973
+      },
+      "13218231": {
+        "index": 4,
+        "title": "Fama-DFA Prize",
+        "ns": 0,
+        "pageid": 13218231
+      },
+      "653404": {
+        "pageimage": "DFAexample.svg",
+        "thumbnail": {
+          "height": 30,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/9\/9d\/DFAexample.svg\/50px-DFAexample.svg.png"
+        },
+        "index": 9,
+        "title": "Deterministic finite automaton",
+        "ns": 0,
+        "pageid": 653404
+      },
+      "536694": {
+        "pageimage": "DFA_Logo.png",
+        "thumbnail": {
+          "height": 40,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/thumb\/c\/c7\/DFA_Logo.png\/50px-DFA_Logo.png"
+        },
+        "index": 6,
+        "title": "Democracy for America",
+        "ns": 0,
+        "pageid": 536694
+      },
+      "17447039": {
+        "pageimage": "DFA_to_be_minimized.jpg",
+        "thumbnail": {
+          "height": 21,
+          "width": 50,
+          "source": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/c\/cd\/DFA_to_be_minimized.jpg\/50px-DFA_to_be_minimized.jpg"
+        },
+        "index": 8,
+        "title": "DFA minimization",
+        "ns": 0,
+        "pageid": 17447039
+      },
+      "1841908": {
+        "index": 2,
+        "title": "DFA Records",
+        "ns": 0,
+        "pageid": 1841908
+      },
+      "6326292": {
+        "index": 5,
+        "title": "DFA (Italian rock band)",
+        "ns": 0,
+        "pageid": 6326292
+      },
+      "373383": {
+        "extract": "DFA may refer to:",
+        "index": 1,
+        "title": "DFA",
+        "ns": 0,
+        "pageid": 373383
+      }
+    }
+  },
+  "warnings": {
+    "extracts": {
+      "*": "exlimit was too large for a whole article extracts request, lowered to 1"
+    },
+    "query": {
+      "*": "Formatting of continuation data has changed. To receive raw query-continue data, use the 'rawcontinue' parameter. To silence this warning, pass an empty string for 'continue' in the initial query."
+    },
+    "main": {
+      "*": "Unrecognized parameter: 'extintro'"
+    }
+  },
+  "continue": {
+    "continue": "||pageimages",
+    "excontinue": 1
+  }
+}
+#+end_example
+

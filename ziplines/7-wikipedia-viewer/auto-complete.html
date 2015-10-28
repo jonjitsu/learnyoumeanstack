@@ -1,0 +1,13 @@
+<div class="wv-search-box">
+    <input class="wv-search"
+           ng-model="c.searchTerm"
+           ng-change="c.doAutoComplete()"
+           ng-keyup="c.keypress($event)"
+           type="text" placeholder="" /><button ng-click="c.doSearch()" class="wv-search-btn"><i class="fa fa-search"></i></button>
+</div>
+<div ng-show="c.results.length>0"  class="wv-results">
+    <div class="wv-results-item"
+         ng-class="{active: c.selection==$index}"
+         ng-click="c.redirectToSelected($index)"
+         ng-repeat="result in c.results">{{ result.title }}</div>
+</div>

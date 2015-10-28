@@ -1,46 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="stylized-stories">
     <head>
         <link href="/css/style.css" rel="stylesheet" media="all">
         <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"><link href='https://fonts.googleapis.com/css?family=Old+Standard+TT:400,700,400italic' rel='stylesheet' type='text/css'>
     </head>
-    <body ng-app="stylized-stories">
+    <body>
         <header>
             <div class="container">
-                <div class="">
-                <div class="row-fluid">
+                <div class="row">
                     <div class="col-md-12">
                         <h1>FreeCodeCamp</h1>
                         <h2>Camper News</h2>
                        
                     </div>
                 </div>
-                </div>
             </div>
         </header>
         <section class="ss-main" ng-controller="StoryController as storyCtrl">
             <div class="container">
-                <div class="row-fluid ss-story-set" ng-repeat="row in storyCtrl.stories">
-                    <div class="ss-story-info col-md-2 col-sm-4" ng-repeat="story in row">
-
-                            <div class="ss-date-line">
-                                <strong class="ss-date">{{ story.timePosted | date:'EEE, dd MMM yyyy' }}</strong>
-                            </div>
+                <div class="row ss-story-set" ng-repeat="row in storyCtrl.stories">
+                    <div class="col-md-12">
+                            <div class="row">
+                        <div class="ss-story-image col-md-2 col-sm-4" ng-repeat="story in row">
                             <div class="ss-photo">
                                 <img class="img-responsive" ng-src="{{ story.author.picture }}">
                             </div>
+                        </div>
+                            </div>
+                            <div class="row">
+                        <div class="ss-story-info col-md-2 col-sm-4" ng-repeat="story in row">
                             <div class="ss-headline">
                                 <a class="ss-title" href="{{story.link}}">{{ story.headline }}</a>
-                                <span class="ss-text">By </span><a class="ss-author" href="http://www.freecodecamp.com/{{story.author.username}}">{{story.author.username}}</a>
+                                By <a class="ss-author" href="http://www.freecodecamp.com/{{story.author.username}}">{{story.author.username}}</a>
                             </div>
                             <div class="ss-controls">
-                                <span class="pull-left ss-upvotes"><i class="fa fa-thumbs-o-up"></i> {{ story.upVotes.length }}</span> <span class="pull-right ss-discuss"><a href="http://www.freecodecamp.com/news/{{ asSlug(story.storyLink) }}" class="btn btn-primary">Discuss</a></span>
+                                <span class="pull-left ss-upvotes"><i class="fa fa-thumbs-o-up"></i> {{ story.upVotes.length }}</span> <span class="pull-right ss-discuss"><a href="" class="btn btn-primary">Discuss</a></span>
+                            </div>
+                            <div class="ss-meta">
+                                <span class="ss-date">Posted on: <strong>{{ story.timePosted | date:'EEE, dd MMM yyyy' }}</strong></span>
                             </div>
                             <!--                            <div ng-show="isValidString(story.description)" class="ss-description">
                             {{ story.description }}
                             </div>-->
                         </div>
+                            </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -53,4 +58,3 @@
         <script src="js/app.js"></script>
     </body>
 </html>
- 

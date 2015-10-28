@@ -1,0 +1,68 @@
+header {
+    font-family: 'Old Standard TT', serif;
+}
+.ss-headline {
+    font-size: 12px;
+    overflow: hidden;
+}
+.ss-headline .ss-title {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}
+.ss-author {
+    float: left;
+    margin-left: 0.4em;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}
+.ss-text {
+    float: left;
+}
+.ss-photo {
+    height: 170px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+.ss-photo img {
+    text-align: center;
+    margin-left: auto; margin-right: auto;
+}
+
+.ss-controls {
+    overflow: hidden;
+}
+.ss-controls {
+    margin: 3px 0;
+}
+
+.ss-upvotes {
+    padding-top: 3px;
+}
+.ss-discuss .btn {
+    font-size: 10px !important;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.ss-date-line {
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+.ss-date {
+    display:block;
+}
+.ss-story-info {
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    margin-top: -1px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    order-radius: 10%;
+    adding: 10px;
+    mrgin-bottom: 50px;
+}

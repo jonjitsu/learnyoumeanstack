@@ -32,14 +32,61 @@ GET http://autocomplete.wunderground.com/aq?query=london
 # ipinfo
 GET http://ipinfo.io/?callback=jQuery21308336533633992076_1438167782172&_=1438167782173
 
-# 
+#{
+#  "postal": "H3G",
+#  "org": "AS5645 TekSavvy Solutions, Inc.",
+#  "loc": "45.5000,-73.5833",
+#  "country": "CA",
+#  "region": "Quebec",
+#  "city": "Montréal",
+#  "hostname": "69-165-206-125.cable.teksavvy.com",
+#  "ip": "69.165.206.125"
+#}
 GET http://ipinfo.io/
+
 
 # freegeoip
 GET http://freegeoip.net/json/?callback=abc
+#{
+#  "ip":"107.179.159.142",
+#  "country_code":"CA",
+#  "country_name":"Canada",
+#  "region_code":"",
+#  "region_name":"",
+#  "city":"",
+#  "zip_code":"",
+#  "time_zone":"",
+#  "latitude":43.643,
+#  "longitude":-79.388,
+#  "metro_code":0
+#}
+#
+GET http://freegeoip.net/json/
 
 # ip-api
+#{
+#  "as":"AS5645 TekSavvy Solutions, Inc.",
+#  "city":"Montreal",
+#  "country":"Canada",
+#  "countryCode":"CA",
+#  "isp":"TekSavvy Solutions",
+#  "lat":45.4861,
+#  "lon":-73.5732,
+#  "org":"TekSavvy Solutions",
+#  "query":"69.165.206.125",
+#  "region":"QC",
+#  "regionName":"Quebec",
+#  "status":"success",
+#  "timezone":"America/Toronto",
+#  "zip":"H3J"
+#}
 GET http://ip-api.com/json/?callback=abc
+
+# NEED API KEY
+GET http://api.ipinfodb.com/v3/ip-city/?ip=74.125.45.100&format=json
+
+#
+GET http://www.telize.com/geoip
 
 
 ###################

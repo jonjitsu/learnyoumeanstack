@@ -1,0 +1,51 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link href="css/style.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <header>
+            <h1>Pomodoro Timer</h1>
+        </header>
+        <section class="jw-controls">
+            <div class="jw-control-box jw-break">
+                <h3>Break Length</h3>
+                <div class="jw-length-control" data-jw-min="1" data-jw-max="15">
+                    <button class="jw-decrease">-</button>
+                    <span class="jw-length">5</span>
+                    <button class="jw-increase">+</button>
+                </div>
+            </div>
+            <div class="jw-control-box jw-session">
+                 <h3>Session Length</h3>
+                <div class="jw-length-control jw-session" data-jw-min="1" data-jw-max="60">
+                    <button class="jw-decrease">-</button>
+                    <span class="jw-length">25</span>
+                    <button class="jw-increase">+</button>
+                </div>
+            </div>
+        </section>
+        <section class="jw-pomodoro-section">
+            <canvas class="jw-radial-progress" width="180"  height="180"></canvas>
+            <div class="jw-pomodoro">
+                <h3 class="jw-session-type">GO</h3>
+                <div class="jw-remaining-time"></div>
+            </div>
+        </section>
+        <footer>
+            &copy; Company 2015
+        </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+</html>

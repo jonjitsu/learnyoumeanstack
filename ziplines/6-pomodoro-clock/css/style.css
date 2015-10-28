@@ -1,0 +1,66 @@
+body {
+    background: rgb(228, 220, 220);
+    font-family: Helvetica;
+}
+* { text-align: center; }
+
+header {
+    margin-top: 5%;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: right;
+}
+
+.jw-control-box {
+    margin-bottom: 10px;
+}
+.jw-control-box .jw-length-control {
+    font-size: 20pt;
+}
+.jw-control-box .jw-decrease {
+    font-size: 20pt;
+}
+.jw-control-box .jw-increase {
+    font-size: 20pt;
+}
+.jw-control-box button,
+.jw-control-box button:focus,
+.jw-control-box button:active {
+    border: 0; shadow: 0; outline: 0;
+}
+
+.jw-pomodoro-section {
+    margin: 30px auto;
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+.jw-pomodoro {
+    border-radius: 50%;
+    background-color: tomato;
+    width: 180px;
+    height: 90px;
+    padding: 45px 0;
+    position: absolute;
+    top: 10px; left: 10px;
+}
+.jw-pomodoro .jw-remaining-time {
+    font-family: Helvetica;
+}
+.jw-break-session {
+    background-color: rgb(0, 100, 0);
+}
+
+.jw-radial-progress {
+    position: absolute;
+    top: 0; left: 0;
+    width: 200px; height: 200px;
+    background-color: white;
+    z-index: -1;
+    border-radius: 50%;
+
+}
