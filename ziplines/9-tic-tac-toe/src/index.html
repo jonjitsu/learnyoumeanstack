@@ -9,16 +9,29 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
         <link rel="stylesheet" href="css/styles.css">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+             <![endif]-->
         <div ng-app="ticTacToe">
-            <div class="ttt-board-wrap">
-            <ttt-game-board></ttt-game-board>
+            <div class="ttt-game" ng-controller="GameController as gc">
+                [xplayer: {{ gc.xplayer }}]
+                [name: {{ gc.name }}]
+                [isRunning: {{ gc.isRunning }}]
+                <div class="ttt-board-wrap">
+                    <div class="ttt-game-board-wrap"
+                         ng-class="{ 'ttt-disabled' : gc.xplayer===false }">
+                        <game-board xplayer="{{gc.xplayer}}"
+                                    is-running="gc.isRunning"
+                                    on-won="gc.handleWin(player)"></ttt-game-board>
+                    </div>
+                    <player-chooser ng-hide="gc.isRunning"
+                                    on-select-xplayer="gc.selectPlayer(xplayer)"></player-chooser>
+                </div>
             </div>
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -30,12 +43,12 @@
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <!--        <script>
-        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-        e.src='//www.google-analytics.com/analytics.js';
-        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-        ga('create','UA-XXXXX-X','auto');ga('send','pageview');
-        </script> -->
+             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+             e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+             e.src='//www.google-analytics.com/analytics.js';
+             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+             </script> -->
     </body>
 </html>

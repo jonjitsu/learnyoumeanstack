@@ -1,0 +1,12 @@
+<div class="ttt-gameboard">
+    <div class="ttt-row"
+         ng-repeat="(cellNum, cell) in c.board.state"
+         ng-if="$index % c.size == 0">
+        <div class="ttt-cell"
+             ng-repeat="col in c.size | range"
+             ng-class="{ 'ttt-winner' : c.board.state[cellNum+col].isWinner }"
+             ng-click="c.mark(cellNum+col)">
+            <div class="ttt-inner">{{ c.board.state[cellNum+col].value===null ? '&nbsp;' : c.board.state[cellNum+col].value  }}</div>
+        </div>
+    </div>
+</div>

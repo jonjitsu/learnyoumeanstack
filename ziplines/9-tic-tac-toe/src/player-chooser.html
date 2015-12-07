@@ -1,0 +1,13 @@
+<section class="ttt-choose-player-box">
+    <p class="ttt-question">So whos X?
+        <span class="ttt-choices">
+            <button class="ttt-choice"
+                    ng-class="{ 'ttt-selected' : pcc.xPlayer===pcc.HUMAN }"
+                    ng-click="pcc.handleSelection(pcc.HUMAN)"><i class="fa fa-user"></i></button>
+            <button class="ttt-choice"
+                    ng-class="{ 'ttt-selected': pcc.xPlayer===pcc.COMPUTER }"
+                    ng-click="pcc.handleSelection(pcc.COMPUTER)"
+            ><i class="fa fa-android"></i></button>
+        </span>
+    </p>
+</section>  

@@ -1,5 +1,16 @@
 <div class="ttt-gameboard">
-    <div class="ttt-row" ng-repeat="(row, cells) in c.gameState.state">
-        <div ng-click="c.mark(row,col)" class="ttt-cell" ng-class="{ 'ttt-winner' : cell.isWinner }" ng-repeat="(col,cell) in cells track by $index"><div class="ttt-strikethrough" />{{ cell.value===null ? '&nbsp;' : cell.value  }}</div>
+    <div class="ttt-cell"
+         ng-repeat="cell in c.board.state"
+         ng-class="{ 'ttt-winner' : cell.isWinner, 'ttt-edge' : $index % 3 == 2, 'ttt-bottom' : $index > 5 }"
+         ng-click="c.mark($index)">
+        <div class="ttt-inner-2">
+            <div class="ttt-inner-1">
+                <div class="ttt-inner-0">
+                    <div class="ttt-inner">
+                        <i class="fa"
+                           ng-class="{ 'fa-circle-o' : cell.value=='O', 'fa-times' : cell.value=='X' }"></i></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

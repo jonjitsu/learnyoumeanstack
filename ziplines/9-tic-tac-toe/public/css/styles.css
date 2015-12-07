@@ -3,29 +3,106 @@ body {
 }
 
 .ttt-board-wrap {
+  width: 80%;
   max-width: 500px;
   margin: 50px auto;
 }
 
 .ttt-row {
   display: block;
-  background: re;
   overflow: hidden;
 }
 
 .ttt-cell {
-  position: relative;
-  border: 1px solid white;
+  width: 32%;
   float: left;
-  background: #000;
-  color: #eee;
-  padding: 10px;
-  font-size: 25px;
+  position: relative;
+  border-right: 4px solid #06799F;
+  border-bottom: 4px solid #06799F;
   font-family: monospace;
 }
 
-.ttt-cell.ttt-winner {
-  color: #dba;
+.ttt-cell .fa-circle-o {
+  olor: #3AAACF;
+  color: #61B4CF;
+}
+
+.ttt-cell .fa-times {
+  color: #4962D6;
+}
+
+.ttt-cell.ttt-edge {
+  border-right: 0;
+}
+
+.ttt-cell.ttt-bottom {
+  border-bottom: 0;
+}
+
+.ttt-cell .ttt-inner-2:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.ttt-cell .ttt-inner-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.ttt-cell .ttt-inner-0 {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.ttt-cell .ttt-inner {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 75px;
+  ransform: scaleX(1.7);
+}
+
+.ttt-row:first-child .ttt-cell {
+  border-top: 0;
+}
+
+.ttt-row:last-child .ttt-cell {
+  border-bottom: 0;
+}
+
+.ttt-row .ttt-cell:first-child {
+  border-left: 0;
+}
+
+.ttt-row .ttt-cell:last-child {
+  border-right: 0;
+}
+
+.ttt-gameboard {
+  border-radius: 10px;
+  padding: 15px;
+  background: white;
+  overflow: hidden;
+}
+
+.ttt-disabled {
+  display: none;
+  opacity: 0.1;
+  background: #ccc;
+}
+
+.ttt-cell.ttt-winner .fa {
+  color: #007929;
+  -webkit-animation: blink .75s linear infinite;
+  -moz-animation: blink .75s linear infinite;
+  -ms-animation: blink .75s linear infinite;
+  -o-animation: blink .75s linear infinite;
+  animation: blink .75s linear infinite;
 }
 
 /* Bringing back the blink tag baby, old-skewl */
@@ -136,25 +213,45 @@ body {
   animation: blink .75s linear infinite;
 }
 
-.ttt-row:first-child .ttt-cell {
-  border-top: 0;
+.ttt-choose-player-box {
+  color: #06799F;
+  margin-top: 30px;
+  font-size: 25px;
+  font-family: Helvetica;
 }
 
-.ttt-row:last-child .ttt-cell {
-  border-bottom: 0;
+.ttt-question {
+  vertical-align: middle;
 }
 
-.ttt-row .ttt-cell:first-child {
-  border-left: 0;
+.ttt-choose-player-box .ttt-choices {
+  margin-left: 20px;
 }
 
-.ttt-row .ttt-cell:last-child {
-  border-right: 0;
-}
-
-.ttt-gameboard {
+.ttt-choose-player-box .ttt-choices .ttt-choice {
+  margin-left: 20px;
+  font-size: 40px;
+  border: 1px solid #06799F;
+  display: inline-block;
+  padding: 8px 15px;
   border-radius: 10px;
-  padding: 15px;
-  background: #000;
-  float: left;
+  ox-shadow: 0 0 2px #000;
+  background: white;
+}
+
+.ttt-choose-player-box .ttt-choices .ttt-choice:hover {
+  cursor: pointer;
+}
+
+.ttt-choose-player-box .ttt-choices .ttt-choice:focus {
+  outline: none;
+}
+
+.ttt-choice i {
+  color: #06799F;
+}
+
+.ttt-choice.ttt-selected {
+  box-shadow: 0 0 5px #034961 !important;
+  background: rgba(209, 233, 240, 1) !important;
 }
