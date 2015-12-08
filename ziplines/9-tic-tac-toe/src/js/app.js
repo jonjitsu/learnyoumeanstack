@@ -17,165 +17,33 @@ var EMPTY_CELL_VALUE = null,
             }
         };
     },
-    checkForWin = function(state, size) { //eslint-disable-line no-unused-vars
-        var generateWinLocations = function(size) {
-            var cellNumber = function(row, col) {
-                return row * size + col;
-            },
-                horizontal = function(size) {
-                    var cellGroups = [],
-                        aGroup, c, r;
-                    for (r = 0; r < size; r++) {
-                        aGroup = [];
-                        for (c = 0; c < size; c++) {
-                            aGroup.push(cellNumber(r, c));
-                        }
-                        cellGroups.push(aGroup);
-                    }
-                    return cellGroups;
-                },
-                vertical = function(size) {
-                    var cellGroups = [],
-                        aGroup, r, c;
-                    for (r = 0; r < size; r++) {
-                        aGroup = [];
-                        for (c = 0; c < size; c++) {
-                            aGroup.push(cellNumber(r, c));
-                        }
-                        cellGroups.push(aGroup);
-                    }
-                    return cellGroups;
-                },
-                diagonal = function(size) {
-                    var cellGroups = [],
-                        diagonal1 = [],
-                        diagonal2 = [],
-                        r = 0,
-                        c = 0;
-
-                    do {
-                        diagonal1.push(cellNumber(r, c));
-                        diagonal2.push(cellNumber(size - r, c));
-                        c++;
-                        r++;
-                    } while (c < size);
-                    return cellGroups;
-                };
-            return horizontal(size)
-                .concat(vertical(size))
-                .concat(diagonal(size));
-        };
-        return generateWinLocations(size);
-    },
     // Cell[]* -> Winner | false
     // Checks board state and returns the winner or false
     checkForWinBruteForce = function(state) {
-        var checkHorizontal = function() {
-            var y, x,
-                expected,
-                winningLine;
-            for (y = 0; y < state.length; y++) {
-                expected = state[y][0].value;
-                if (expected === EMPTY_CELL_VALUE) continue;
-                winningLine = [
-                    [y, 0]
-                ];
-                for (x = 1; x < state[y].length; x++) {
-                    if (state[y][x].value !== expected) {
-                        winningLine = null;
-                        break;
-                    } else {
-                        winningLine.push([y, x]);
-                    }
+        var wins = [
+            // horizontals
+            [0,1,2], [3,4,5], [6,7,8],
+            // verticals
+            [0,3,6], [1,4,7], [2,5,8],
+            // diagonals
+            [0,4,8], [6,4,2]
+        ],
+            isWinningLine = function(line) {
+                var i, expected = state[line[0]];
+
+                if( expected===EMPTY_CELL_VALUE ) return false;
+
+                for(i=1; i<line.length; i++) {
+                    if( state[line[i]]!==expected ) return false;
                 }
-                if (winningLine !== null) {
-                    return {
-                        winner: expected,
-                        line: winningLine
-                    };
-                }
-            }
-            return false;
-        },
-            checkVertical = function() {
-                var y, x,
-                    expected,
-                    winningLine;
-                for (x = 0; x < state[0].length; x++) {
-                    expected = state[0][x].value;
-                    if (expected === EMPTY_CELL_VALUE) continue;
-                    winningLine = [
-                        [0, x]
-                    ];
-                    for (y = 1; y < state.length; y++) {
-                        if (state[y][x].value !== expected) {
-                            winningLine = null;
-                            break;
-                        } else winningLine.push([y, x]);
-                    }
-                    if (winningLine !== null) {
-                        return {
-                            winner: expected,
-                            line: winningLine
-                        };
-                    }
-                }
-                return false;
+                return true;
             },
-            checkDiagonal = function() {
-                var y = 1,
-                    x = 1,
-                    expected = state[0][0].value,
-                    winningLine;
-
-                if (expected !== EMPTY_CELL_VALUE) {
-                    winningLine = [
-                        [0, 0]
-                    ];
-                    while (y < state.length && x < state[y].length) {
-                        if (expected !== state[y][x].value) {
-                            winningLine = null;
-                            break;
-                        } else winningLine.push([y, x]);
-                        x++;
-                        y++;
-                    }
-                    if (winningLine !== null) {
-                        return {
-                            winner: expected,
-                            line: winningLine
-                        };
-                    }
-                }
-
-                x = 1, y = state.length - 1;
-                expected = state[y][0].value;
-                winningLine = [
-                    [y, 0]
-                ];
-                y--;
-                if (expected !== EMPTY_CELL_VALUE) {
-                    while (y >= 0 && x < state[y].length) {
-                        if (expected !== state[y][x].value) {
-                            winningLine = null;
-                            break;
-                        } else winningLine.push([y, x]);
-                        x++;
-                        y--;
-                    }
-                    if (winningLine !== null) {
-                        return {
-                            winner: expected,
-                            line: winningLine
-                        };
-                    }
-                }
-                return false;
-            },
-            winner = false;
-
-        if ((winner = checkHorizontal()) || (winner = checkVertical()) || (winner = checkDiagonal())) {
-            return winner;
+            winners = wins.filter(isWinningLine);
+        if( winners.length>0 ) {
+            return {
+                winner: state[winners[0][0]],
+                line: winners[0]
+            };
         } else {
             return false;
         }
@@ -191,28 +59,23 @@ var EMPTY_CELL_VALUE = null,
             }
             return state;
         },
-            toGrid = function(state) {
-                var grid = [],
-                    row = [];
-                for (var i = 0; i < state.length; i++) {
-                    row.push(state[i]);
-                    if (i % size === (size - 1)) {
-                        grid.push(row);
-                        row = [];
-                    }
-                }
-                return grid;
+            toFlatArray = function(state) {
+                return state.map(function(cell) {
+                    return cell.value;
+                });
             },
             state = initialize(size, value),
-            grid = toGrid(state),
             board = {
                 get: function(row, col) {
                     return this.state[row * size + col];
                 },
                 state: state,
+                asArray: toFlatArray.bind(null, state),
                 isGameOver: false,
                 nextMark: 'X',
-                checkForWin: checkForWinBruteForce.bind(board, grid),
+                checkForWin: function() {
+                    return checkForWinBruteForce(this.asArray())
+                },
                 checkForDraw: function(state) {
                     var i;
                     for (i=0; i<state.length; i++) {
@@ -239,14 +102,10 @@ var EMPTY_CELL_VALUE = null,
                         }
                     }
                 },
-                grid: grid,
                 setWinner: function(who, line) {
                     this.winner = who;
-                    line.forEach(function(coords) {
-                        var x, y;
-                        y = coords[0];
-                        x = coords[1];
-                        this.get(y, x).isWinner = true;
+                    line.forEach(function(c) {
+                        this.state[c].isWinner = true;
                     }, this);
                 },
                 reset: function() {
@@ -270,31 +129,120 @@ var EMPTY_CELL_VALUE = null,
             return null;
         },
         wikipedia: function(state, mark) {
-            var s = state.slice(),
-                win = function(state, mark) {
-                    for(var cn=0; cn<state.length; cn++) {
-                        if(state[cn].value===EMPTY_CELL_VALUE) {
+            var opponent = function(mark) { return mark==='X' ? 'O' : 'X'; },
+                countWinningPositions = function(state, mark) {
+                    var count=0, cn;
+                    for(cn=0; cn<state.length; cn++) {
+                        if(state[cn]===EMPTY_CELL_VALUE) {
                             state[cn]=mark;
-                            if( checkForWinBruteForce(state) ) {
-                                return cn;
+                            if( checkForWinBruteForce(state) ) count++;
+                            state[cn]=EMPTY_CELL_VALUE;
+                        }
+                    }
+                    return count;
+                },
+                hasFork = function(state, mark) {
+                    return countWinningPositions(state, mark) > 1;
+                },
+                withEmptyCells = function(fn) {
+                    var cn, result;
+                    for(cn=0; cn<state.length; cn++) {
+                        if(state[cn]===EMPTY_CELL_VALUE) {
+                            if( (result = fn(cn, state.slice()))!==undefined ) {
+                                return result; 
                             }
                         }
                     }
                     return false;
                 },
+                emptySide = function(state, mark) {
+                    if( state[1]===EMPTY_CELL_VALUE ) return 1;
+                    if( state[3]===EMPTY_CELL_VALUE ) return 3;
+                    if( state[5]===EMPTY_CELL_VALUE ) return 5;
+                    if( state[7]===EMPTY_CELL_VALUE ) return 7;
+                },
                 anyEmptySquare = function(state) {
                     for(var cn=0; cn<state.length; cn++) {
-                         if(state[cn].value===EMPTY_CELL_VALUE) return cn
+                         if(state[cn]===EMPTY_CELL_VALUE) return cn
                     }
                     return false;
                 },
-                strategies = [ win, anyEmptySquare ],
+                win = function(state, mark) {
+                    for(var cn=0; cn<state.length; cn++) {
+                        if(state[cn]===EMPTY_CELL_VALUE) {
+                            state[cn]=mark;
+                            if( checkForWinBruteForce(state) ) {
+                                return cn;
+                            }
+                            state[cn]=EMPTY_CELL_VALUE;
+                        }
+                    }
+                    return false;
+                },
+                block = function(state, mark) {
+                    return win(state, opponent(mark));
+                },
+                fork = function(state, mark) {
+                    return withEmptyCells(function(cn, state) {
+                        state[cn]=mark;
+                        if(hasFork(state, mark)) return cn;
+                    })
+                },
+                blockFork = function(state, mark) {
+                    var opFork = fork(state, opponent(mark));
+                    if( opFork ) {
+                        if(state[4]===mark) {
+                            return emptySide(state, mark);
+                        }
+                        return opFork;
+                    }
+                    return false;
+                },
+                center = function(state, mark) {
+                    return state[4]===EMPTY_CELL_VALUE ? 4 : false;
+                },
+                oppositeCorner = function(state, mark) {
+                    var op = opponent(mark);
+                    if( state[0]===op && state[8]===EMPTY_CELL_VALUE ) return 8;
+                    if( state[8]===op && state[0]===EMPTY_CELL_VALUE ) return 0;
+                    if( state[2]===op && state[6]===EMPTY_CELL_VALUE ) return 6;
+                    if( state[6]===op && state[2]===EMPTY_CELL_VALUE ) return 2;
+                    return false;
+                },
+                emptyCorner = function(state, mark) {
+                    var areAllCornersEmpty = function(state) {
+                        return state[0]===EMPTY_CELL_VALUE
+                            && state[2]===EMPTY_CELL_VALUE
+                            && state[6]===EMPTY_CELL_VALUE
+                            && state[8]===EMPTY_CELL_VALUE;
+                    };
+                    return areAllCornersEmpty(state) ? 0 : false;
+                },
+                anyEmptyCorner = function(state, mark) {
+                    if( state[0]===EMPTY_CELL_VALUE ) return 0;
+                    if( state[2]===EMPTY_CELL_VALUE ) return 2;
+                    if( state[6]===EMPTY_CELL_VALUE ) return 6;
+                    if( state[8]===EMPTY_CELL_VALUE ) return 8;
+                    return false;
+                },
+                strategies = [ win, block,
+                               fork,
+                               blockFork,
+                               center,
+                               oppositeCorner,
+                               emptyCorner,
+                               //anyEmptyCorner,
+                               emptySide,
+                               anyEmptySquare ],
                 pick = function(strategies, state, mark) {
                     var i, cell;
                     for(i=0; i<strategies.length; i++) {
-                        if( (cell=strategies[i](state.slice(), mark)) ) return cell;
+                        if( (cell=strategies[i](state.slice(), mark))!==false ) {
+                            d('Strat: ' + i);
+                            return cell;
+                        }
                     }
-                    throw new Error("Should not get here.");
+                    throw new Error("Should not be here.");
                 }
             ;
             return pick(strategies, state, mark);
@@ -363,8 +311,8 @@ angular
         GameBoardController = [function() {
             // x always first
             var //self = this,
-            ai = AIs.dumb,
-            // ai = AIs.wikipedia,
+            // ai = AIs.dumb,
+            ai = AIs.wikipedia,
             isComputerPlayer = function(player) {
                 return parseInt(player, 10)===PLAYER.COMPUTER;
             };
@@ -373,7 +321,7 @@ angular
             this.board = board(BOARD_SIZE, EMPTY_CELL_VALUE);
 
             this.computerMove = function() {
-                var move = ai(this.board.state, this.board.nextMark);
+                var move = ai(this.board.asArray(), this.board.nextMark);
                 this.board.playMove(move);
             }
 

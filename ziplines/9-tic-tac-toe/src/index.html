@@ -19,9 +19,6 @@
              <![endif]-->
         <div ng-app="ticTacToe">
             <div class="ttt-game" ng-controller="GameController as gc">
-                [xplayer: {{ gc.xplayer }}]
-                [name: {{ gc.name }}]
-                [isRunning: {{ gc.isRunning }}]
                 <div class="ttt-board-wrap">
                     <div class="ttt-game-board-wrap"
                          ng-class="{ 'ttt-disabled' : gc.xplayer===false }">
