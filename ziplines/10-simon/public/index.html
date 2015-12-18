@@ -17,30 +17,43 @@
              <![endif]-->
         <section ng-app="simonApp">
             <div class="sm-simon">
-                <div class="sm-game" >
-                    <div class="sm-btn-wrap"><button class="sm-btn sm-green"></button></div>
-                    <div class="sm-btn-wrap"><button class="sm-btn sm-red"></button></div>
+                <div class="sm-game" ng-controller="GameCtrl">
+                    <!--                     <div class="sm-btn-wrap"><button ng-mousedown="buttonDown(0)" ng-mouseup="buttonUp(0)"  class="sm-btn sm-green"></button></div> -->
+                    <colored-button color="green"></colored-button>
+                    <colored-button color="red"></colored-button>
+                    <!--                     <div class="sm-btn-wrap"><button ng-mousedown="buttonDown(1)" ng-mouseup="buttonUp(1)" class="sm-btn sm-red"></button></div> -->
                     <div class="sm-controls-wrap">
                         <div class="sm-center-v">
                             <div class="sm-center-h">
                                 <div class="sm-controls">
-                                    <div class="sm-logo">Simon&reg;</div>
-                                    <div class="sm-level"></div>
-                                    <div class="sm-rnd-btn"><button class="sm-start"></button>start</div>
-                                    <div class="sm-rnd-btn"><button class="sm-strict-mode"></button>strict</div>
-                                    <div class="sm-switch">off<button class="sm-on"><span class="sm-feedback"></span></button>on</div>
+                                    <div class="sm-logo">Simon<span class="sm-reg">&nbsp;&reg;</span></div>
+                                    <div class="sm-level">{{round}}</div>
+                                    <div class="sm-rnd-btn"><button
+                                                                ng-click="start()"
+                                                                class="sm-start"
+                                                                ng-class="isStarted && 'sm-active'"></button>start</div>
+                                    <div class="sm-rnd-btn"><button
+                                                                ng-click="strict()"
+                                                                class="sm-strict-mode"
+                                                                ng-class="isStrict && 'sm-active'"></button>strict</div>
+                                    <div class="sm-switch">off<button
+                                                                  ng-click="onOff()"
+                                                                  class="sm-on"
+                                                                  ng-class="isOn && 'sm-active'"><span class="sm-feedback"></span></button>on</div>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                    <div class="sm-btn-wrap"><button class="sm-btn sm-yellow"></button></div>
-                    <div class="sm-btn-wrap"><button class="sm-btn sm-blue"></button></div>
+                    <colored-button color="yellow"></colored-button>
+                    <colored-button color="blue"></colored-button>
+                    <!--                     <div class="sm-btn-wrap"><button ng-mousedown="buttonDown(2)" ng-mouseup="buttonUp(2)" class="sm-btn sm-yellow"></button></div> -->
+                    <!--                     <div class="sm-btn-wrap"><button ng-mousedown="buttonDown(3)" ng-mouseup="buttonUp(3)" class="sm-btn sm-blue"></button></div> -->
                 </div>
             </div>
         </section>
 
         <script src="vendor/angular/angular.min.js"></script>
-        <script src="js/app.min.js"></script>
+        <script src="js/app.js"></script>
     </body>
 </html>
